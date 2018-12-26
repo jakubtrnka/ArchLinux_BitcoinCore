@@ -1,0 +1,31 @@
+pre_install() {
+    getent group crypto >/dev/null || groupadd -r crypto
+    mkdir -p /blockchain
+    chown root:crypto /blockchain
+    chmod 770 /blockchain
+    getent passwd bitcoin >/dev/null || useradd -r -U -K UMASK=0077 -G crypto -b /blockchain -d /blockchain/bitcoin -m -s /usr/bin/nologin -c "Bitcoin core" bitcoin
+}
+
+post_install() {
+    chown -R bitcoin:bitcoin /etc/bitcoin
+    chmod -R -77 /etc/bitcoin
+    systemctl daemon-reload
+    systemctl enable bitcoind.service
+    systemctl start bitcoind.service
+}
+
+pre_upgrade() {
+    systemctl stop bitcoind.service
+}
+
+post_upgrade() {
+    systemctl start bitcoind.service
+}
+
+pre_remove() {
+    systemctl stop bitcoind.service
+    systemctl disable bitcoind.service
+}
+post_remove() {
+    userdel -r bitcoin
+}

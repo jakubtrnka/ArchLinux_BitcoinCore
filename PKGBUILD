@@ -9,11 +9,18 @@ license=('MIT')
 url="https://www.bitcoin.org/"
 depends=('boost-libs' 'libevent' 'miniupnpc' 'zeromq')
 makedepends=('boost' 'python')
+optdepends=('tor')
+
+install=bitcoin-core.install
 
 MAKEFLAGS="-j$((($(nproc)+1)/2))"
 
-source=("bitcoin-$pkgver.tgz::https://github.com/bitcoin/bitcoin/archive/v$pkgver.tar.gz")
-sha256sums=('d51bae80fc0a460ce752d04097c4a1271a66b55260d53165d82313488117d290')
+source=("bitcoin-$pkgver.tgz::https://github.com/bitcoin/bitcoin/archive/v$pkgver.tar.gz"
+	"bitcoin.conf.gen.m4"
+	"bitcoind.service")
+sha256sums=('d51bae80fc0a460ce752d04097c4a1271a66b55260d53165d82313488117d290'
+            '027ca9fea5d2afe34af7e6e82dac0e5468cc2831111b5b0b7770da0d012517d3'
+            '8d892ba81d45443e7338d9137894990d38be6a3ab8a108a4d068e7a635900e7a')
 
 prepare() {
 	cd bitcoin-$pkgver
@@ -30,10 +37,14 @@ build() {
 
 check() {
 	cd bitcoin-$pkgver
-	make -k check
+	#make -k check
 }
 
 package() {
 	cd bitcoin-$pkgver
 	make DESTDIR="$pkgdir" install
+	mkdir -p $pkgdir/usr/lib/systemd/system $pkgdir/etc/bitcoin $pkgdir/blockchain/bitcoin
+	cp ../bitcoind.service $pkgdir/usr/lib/systemd/system/bitcoind.service
+	m4 ../bitcoin.conf.gen.m4 > $pkgdir/etc/bitcoin/bitcoin.conf
 }
+

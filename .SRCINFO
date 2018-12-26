@@ -3,6 +3,7 @@ pkgbase = bitcoin-core
 	pkgver = 0.17.1
 	pkgrel = 1
 	url = https://www.bitcoin.org/
+	install = service.install
 	arch = x86_64
 	license = MIT
 	makedepends = boost
@@ -11,11 +12,16 @@ pkgbase = bitcoin-core
 	depends = libevent
 	depends = miniupnpc
 	depends = zeromq
+	optdepends = tor
 	conflicts = bitcoin-daemon
 	conflicts = bitcoin-cli
 	conflicts = bitcoin-tx
 	source = bitcoin-0.17.1.tgz::https://github.com/bitcoin/bitcoin/archive/v0.17.1.tar.gz
+	source = bitcoin.conf.gen.m4
+	source = bitcoind.service
 	sha256sums = d51bae80fc0a460ce752d04097c4a1271a66b55260d53165d82313488117d290
+	sha256sums = 027ca9fea5d2afe34af7e6e82dac0e5468cc2831111b5b0b7770da0d012517d3
+	sha256sums = 8d892ba81d45443e7338d9137894990d38be6a3ab8a108a4d068e7a635900e7a
 
 pkgname = bitcoin-core
 
