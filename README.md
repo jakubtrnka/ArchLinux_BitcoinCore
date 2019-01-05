@@ -30,8 +30,18 @@ zmqpubrawtx=tcp://127.0.0.1:48333
 * bitcoin home dir is in /blockchain/bitcoin
 
 usage:
+1. prepare directory at `/blockchain` with at least 300GB free space
+2. build project
 ```
 $ git clone https://github.com/jakubtrnka/ArchLinux_BitcoinCore
 $ cd ArchLinux_BitcoinCore
 $ makepkg -sri
 ```
+3. enable & start bitcoind.service: `systemctl enable bitcoind`...
+4. [optional] copy RPC credentials to your home bitcoin directory in order to use bitcoin-cli:
+```
+$ mkdir ~/.bitcoin
+$ egrep 'rpc(user|password)' pkg/bitcoin-core/etc/bitcoin/bitcoin.conf > ~/.bitcoin/bitcoin.conf
+$ chmod 600 ~/.bitcoin/bitcoin.conf
+```
+5. [optional] set up Tor by creating Tor control password and opening Tor control port as described in bitcoin.conf
