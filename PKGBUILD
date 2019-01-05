@@ -41,10 +41,10 @@ check() {
 }
 
 package() {
+	m4 bitcoin.conf.gen.m4 > bitcoin.conf
 	cd bitcoin-$pkgver
 	make DESTDIR="$pkgdir" install
-	mkdir -p $pkgdir/usr/lib/systemd/system $pkgdir/etc/bitcoin $pkgdir/blockchain/bitcoin
-	cp ../bitcoind.service $pkgdir/usr/lib/systemd/system/bitcoind.service
-	m4 ../bitcoin.conf.gen.m4 > $pkgdir/etc/bitcoin/bitcoin.conf
+	install -D ../bitcoind.service $pkgdir/usr/lib/systemd/system/bitcoind.service
+	install -Dm 600 ../bitcoin.conf $pkgdir/etc/bitcoin/bitcoin.conf
 }
 
