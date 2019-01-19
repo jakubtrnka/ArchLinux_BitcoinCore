@@ -1,6 +1,6 @@
 pre_install() {
     getent group crypto >/dev/null || groupadd -r crypto
-    getent passwd bitcoin >/dev/null || useradd -r -U -K UMASK=0077 -G crypto -b /blockchain -d /blockchain/bitcoin -m -s /usr/bin/nologin -c "Bitcoin core" bitcoin
+    getent passwd bitcoin >/dev/null || useradd -r -U -K UMASK=0077 -G crypto -b /blockchain -d /blockchain/bitcoin -s /usr/bin/nologin -c "Bitcoin core" bitcoin
 }
 
 post_install() {
@@ -15,7 +15,4 @@ pre_upgrade() {
 pre_remove() {
     systemctl stop bitcoind.service
     systemctl disable bitcoind.service
-}
-post_remove() {
-    userdel -r bitcoin
 }

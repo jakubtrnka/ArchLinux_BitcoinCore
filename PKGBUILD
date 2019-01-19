@@ -1,7 +1,7 @@
 # Maintainer: Jakub Trnka <jakub.trnka@chainanalytics.net>
 pkgname='bitcoin-core'
 pkgver=0.17.1
-pkgrel=1
+pkgrel=2
 conflicts=('bitcoin-daemon' 'bitcoin-cli' 'bitcoin-tx')
 arch=('x86_64')
 pkgdesc="Headless version of Bitcoin Core software ready to run as backend for other services, e. g. Lightning-network."

@@ -1,7 +1,7 @@
 pkgbase = bitcoin-core
 	pkgdesc = Headless version of Bitcoin Core software ready to run as backend for other services, e. g. Lightning-network.
 	pkgver = 0.17.1
-	pkgrel = 1
+	pkgrel = 2
 	url = https://www.bitcoin.org/
 	install = bitcoin-core.install
 	arch = x86_64
